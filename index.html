@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Join Roblox Server - Jailbreak Changelogs</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #2E3944 url('https://assets.jailbreakchangelogs.xyz/assets/backgrounds/background2.webp') no-repeat center center fixed;
+      background-size: cover;
+      color: #D3D9D4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Vignette overlay for main screen */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://assets.jailbreakchangelogs.xyz/assets/backgrounds/vignette.png') no-repeat center center;
+      background-size: cover;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Error page background styling */
+    body.error-page {
+      background: #2E3944 url('https://assets.jailbreakchangelogs.xyz/assets/backgrounds/background16.webp') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Vignette and overlay for error page */
+    body.error-page::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        url('https://assets.jailbreakchangelogs.xyz/assets/backgrounds/vignette.png') no-repeat center center,
+        rgba(0, 0, 0, 0.5);
+      background-size: cover;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+      padding: 2rem;
+      background: rgba(33, 42, 49, 0.35);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .logo {
+      width: 140px;
+      height: auto;
+      margin: 0 auto 2rem;
+      display: block;
+      filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.5));
+    }
+
+    .logo-fallback {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #5865F2;
+      border-radius: 50%;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.5));
+    }
+
+    h1 {
+      color: #FFFFFF;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    p {
+      color: #D3D9D4;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(88, 101, 242, 0.3);
+      border-radius: 50%;
+      border-top-color: #5865F2;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .close-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #212A31;
+      color: #D3D9D4;
+      border: 1px solid #2E3944;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin-top: 1rem;
+    }
+
+    .close-button:hover {
+      background: #2E3944;
+      border-color: #5865F2;
+      color: #FFFFFF;
+    }
+
+    .error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #FCA5A5;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86EFAC;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    /* Error page styling (matching not-found pages) */
+    .error-code {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 6rem;
+      color: #5865F2;
+      margin-bottom: 1rem;
+    }
+
+    .error-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .error-message {
+      color: #D3D9D4;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .error-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .primary-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #5865F2;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .primary-button:hover {
+      background: #4752C4;
+    }
+
+    .secondary-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #212A31;
+      color: #D3D9D4;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .secondary-button:hover {
+      background: #2E3944;
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img
+      src="https://assets.jailbreakchangelogs.xyz/assets/logos/JBCL_Short_Transparent.webp"
+      alt="Jailbreak Changelogs Logo"
+      class="logo"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    />
+    <div class="logo-fallback" style="display: none;">JBCL</div>
+
+    <h1>Joining Roblox Server...</h1>
+    <p>Redirecting you to the Jailbreak server. Please wait...</p>
+
+    <div id="status" class="success">
+      <span class="loading"></span>
+      Connecting to server...
+    </div>
+
+    <script>
+      const placeId = "606849621"; // Jailbreak place ID
+      const statusElement = document.getElementById('status');
+
+      // Get jobid from URL query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const jobId = urlParams.get("jobid");
+
+      if (jobId) {
+        const robloxUrl = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
+
+        // Update status
+        statusElement.innerHTML = '<span class="loading"></span>Launching Roblox...';
+        statusElement.className = 'success';
+
+        // Redirect to Roblox
+        window.location.href = robloxUrl;
+
+        // Try to close tab after 2 seconds
+        setTimeout(() => {
+          statusElement.innerHTML = '✅ Successfully launched Roblox!';
+          statusElement.className = 'success';
+
+          setTimeout(() => {
+            window.close();
+          }, 1000);
+        }, 2000);
+
+      } else {
+        document.body.classList.add('error-page');
+
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+          <div class="mb-8">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Connection Error</h1>
+            <p class="error-message">
+              Unable to connect to the server. The jobid parameter is missing from the URL.
+            </p>
+          </div>
+          <div class="error-actions">
+            <button onclick="window.close()" class="primary-button">
+              Close Tab
+            </button>
+            <button onclick="window.history.back()" class="secondary-button">
+              Go Back
+            </button>
+          </div>
+        `;
+      }
+    </script>
+
+    <p>If the tab did not close automatically, you can close it manually.</p>
+    <a href="#" onclick="window.close()" class="close-button">
+      Close Tab
+    </a>
+  </div>
+</body>
+</html>
