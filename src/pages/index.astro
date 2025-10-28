@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Logo from '../components/Logo.astro';
+import LoadingState from '../components/LoadingState.astro';
+
+const backgroundUrl = 'https://assets.jailbreakchangelogs.xyz/assets/backgrounds/png/background15.png';
+---
+
+<BaseLayout backgroundUrl={backgroundUrl}>
+  <div class="container">
+    <Logo />
+
+    <h1>Joining Server...</h1>
+    <p>Redirecting you to the Jailbreak server. Please wait...</p>
+
+    <LoadingState />
+  </div>
+
+  <script src="../scripts/server-joiner.ts"></script>
+</BaseLayout>

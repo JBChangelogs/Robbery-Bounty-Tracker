@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+
+// Logo component with fallback
+---
+
+<Image
+  src="https://assets.jailbreakchangelogs.xyz/assets/logos/JBCL_Short_Transparent.webp"
+  alt="Jailbreak Changelogs Logo"
+  class="logo"
+  width={140}
+  height={140}
+  loading="eager"
+  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+/>
+<div class="logo-fallback" style="display: none;">JBCL</div>
+

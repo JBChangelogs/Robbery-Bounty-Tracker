@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  backgroundUrl?: string;
+}
+
+const {
+  title = 'Join Roblox Server - Jailbreak Changelogs',
+  backgroundUrl
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  {backgroundUrl && (
+    <style is:global set:html={`
+      body {
+        background-image: url(${backgroundUrl}) !important;
+      }
+    `} />
+  )}
+</head>
+<body>
+  <slot />
+</body>
+</html>
