@@ -1,34 +1,50 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title?: string;
   backgroundUrl?: string;
 }
 
-const {
-  title = 'Join Roblox Server - Jailbreak Changelogs',
-  backgroundUrl
-} = Astro.props;
+const { title = "Join Roblox Server - Jailbreak Changelogs", backgroundUrl } =
+  Astro.props;
+
+const umamiScript = import.meta.env.PUBLIC_UMAMI_SCRIPT_NAME;
+const umamiUrl = umamiScript
+  ? `https://umami.jailbreakchangelogs.xyz${umamiScript.startsWith("/") ? umamiScript : `/${umamiScript}`}`
+  : null;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title}</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
-  <script defer src="https://umami.jailbreakchangelogs.xyz/script.js" data-website-id="3c3f84af-6cc9-4d39-86c8-374da4351a11"></script>
-  {backgroundUrl && (
-    <style is:global set:html={`
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    {
+      umamiUrl && (
+        <script
+          defer
+          src={umamiUrl}
+          data-website-id="3c3f84af-6cc9-4d39-86c8-374da4351a11"
+        />
+      )
+    }
+    {
+      backgroundUrl && (
+        <style
+          is:global
+          set:html={`
       body {
         background-image: url(${backgroundUrl}) !important;
       }
-    `} />
-  )}
-</head>
-<body>
-  <slot />
-</body>
+    `}
+        />
+      )
+    }
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
