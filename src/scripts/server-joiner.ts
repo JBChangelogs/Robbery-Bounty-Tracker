@@ -29,6 +29,10 @@ function handleServerJoin(jobId: string, statusElement: HTMLElement) {
   const initialLoading = document.getElementById('initial-loading');
   const joiningState = document.getElementById('joining-state');
   const browserJoinLink = document.getElementById('browser-join-link') as HTMLAnchorElement;
+  const troubleshoot = document.getElementById('troubleshoot');
+  const autoCloseContainer = document.getElementById('auto-close-container');
+  const autoCloseCountdown = document.getElementById('auto-close-countdown');
+  const cancelAutoClose = document.getElementById('cancel-auto-close');
 
   if (initialLoading) initialLoading.classList.add('hidden');
   if (joiningState) joiningState.classList.remove('hidden');
@@ -37,14 +41,90 @@ function handleServerJoin(jobId: string, statusElement: HTMLElement) {
   // Attempt the auto-launch immediately
   window.location.href = directUrl;
 
-  // If they are still here after 3 seconds, show troubleshooting
-  setTimeout(() => {
-    const troubleshoot = document.getElementById('troubleshoot');
-    if (troubleshoot) {
-      troubleshoot.classList.remove('opacity-0');
-      troubleshoot.classList.add('opacity-100');
+  const totalTime = 10;
+  let timeLeft = totalTime;
+  let progressStartTimestamp: number;
+  let countdownInterval: number;
+  let animationFrame: number;
+
+  const progressBar = document.getElementById('progress-bar');
+  const closeNow = document.getElementById('close-now');
+  const fallbackMessage = document.getElementById('fallback-message');
+
+  const updateUI = () => {
+    if (autoCloseCountdown) {
+      autoCloseCountdown.textContent = `Closing in ${timeLeft} seconds`;
     }
-  }, 3000);
+  };
+
+  const tryClose = () => {
+    try {
+      // The "window.open trick" to allow closing windows not opened by script
+      window.open('', '_self');
+      window.close();
+      
+      // Fallback check if browser still blocked it
+      setTimeout(() => {
+        if (!window.closed && fallbackMessage) {
+          fallbackMessage.classList.remove('hidden');
+        }
+      }, 500);
+    } catch {
+      if (fallbackMessage) fallbackMessage.classList.remove('hidden');
+    }
+  };
+
+  const animateProgress = () => {
+    const now = performance.now();
+    const elapsed = (now - progressStartTimestamp) / 1000;
+    const progress = Math.min(elapsed / totalTime, 1);
+    
+    if (progressBar) {
+      progressBar.style.width = (progress * 100) + '%';
+    }
+
+    if (progress < 1) {
+      animationFrame = requestAnimationFrame(animateProgress);
+    }
+  };
+
+  const stopAutoClose = () => {
+    clearInterval(countdownInterval);
+    cancelAnimationFrame(animationFrame);
+    if (autoCloseContainer) autoCloseContainer.classList.add('hidden');
+  };
+
+  // Start the logic
+  progressStartTimestamp = performance.now();
+  requestAnimationFrame(animateProgress);
+  updateUI();
+
+  countdownInterval = window.setInterval(() => {
+    timeLeft--;
+    updateUI();
+
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      tryClose();
+    }
+  }, 1000);
+
+  // Button listeners
+  if (closeNow) {
+    closeNow.addEventListener('click', () => {
+      stopAutoClose();
+      tryClose();
+    });
+  }
+
+  if (cancelAutoClose) {
+    cancelAutoClose.addEventListener('click', stopAutoClose);
+  }
+
+  if (browserJoinLink) {
+    browserJoinLink.addEventListener('click', stopAutoClose);
+  }
+
 }
 
 /**
