@@ -20,19 +20,45 @@ export function initServerJoiner() {
  * Handles joining a Roblox server with the given job ID
  */
 function handleServerJoin(jobId: string, statusElement: HTMLElement) {
-  const robloxUrl = `roblox://experiences/start?placeId=${PLACE_ID}&gameInstanceId=${jobId}`;
+  // Primary method: Direct Deep Link
+  const directUrl = `roblox://experiences/start?placeId=${PLACE_ID}&gameInstanceId=${jobId}`;
   
-  statusElement.innerHTML = 'Launching Roblox...';
-  statusElement.className = 'info';
-  window.location.href = robloxUrl;
+  // Secondary method: Web Redirector (more robust as it triggers updates if Roblox is outdated)
+  const webUrl = `https://www.roblox.com/games/start?placeId=${PLACE_ID}&gameInstanceId=${jobId}`;
+  
+  statusElement.className = '';
+  statusElement.innerHTML = `
+    <div class="flex flex-col items-center">
+      <h1 class="text-xl">Joining Jailbreak</h1>
+      <p>Launching the game instance...</p>
+      
+      <div class="spinner-container">
+        <div class="spinner"></div>
+      </div>
 
+      <div id="troubleshoot" class="opacity-0 transition-opacity flex flex-col items-center">
+        <a href="${webUrl}" target="_blank" class="secondary-link">
+          App unsupported? Try Browser
+        </a>
+      </div>
+
+      <a href="https://jailbreakchangelogs.xyz/" target="_blank" class="footer-brand">
+        <span>Powered by Jailbreak Changelogs</span>
+      </a>
+    </div>
+  `;
+
+  // Attempt the auto-launch immediately
+  window.location.href = directUrl;
+
+  // If they are still here after 3 seconds, show troubleshooting
   setTimeout(() => {
-    if (statusElement) {
-      statusElement.innerHTML = 'Successfully launched Roblox!';
-      statusElement.className = 'success';
-      setTimeout(() => window.close(), 1000);
+    const troubleshoot = document.getElementById('troubleshoot');
+    if (troubleshoot) {
+      troubleshoot.classList.remove('opacity-0');
+      troubleshoot.classList.add('opacity-100');
     }
-  }, 2000);
+  }, 3000);
 }
 
 /**
