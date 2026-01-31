@@ -2,12 +2,18 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Logo from "../components/Logo.astro";
 import LoadingState from "../components/LoadingState.astro";
+import JoiningState from "../components/JoiningState.astro";
+import ErrorState from "../components/ErrorState.astro";
 ---
 
 <BaseLayout>
   <div class="container">
-    <Logo />
-    <LoadingState />
+    <div id="initial-loading">
+      <Logo />
+      <LoadingState />
+    </div>
+    <JoiningState />
+    <ErrorState />
   </div>
 
   <script src="../scripts/server-joiner.ts"></script>

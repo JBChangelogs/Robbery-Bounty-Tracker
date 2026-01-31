@@ -26,27 +26,13 @@ function handleServerJoin(jobId: string, statusElement: HTMLElement) {
   // Secondary method: Web Redirector (more robust as it triggers updates if Roblox is outdated)
   const webUrl = `https://www.roblox.com/games/start?placeId=${PLACE_ID}&gameInstanceId=${jobId}`;
   
-  statusElement.className = '';
-  statusElement.innerHTML = `
-    <div class="flex flex-col items-center">
-      <h1 class="text-xl">Joining Jailbreak</h1>
-      <p>Launching the game instance...</p>
-      
-      <div class="spinner-container">
-        <div class="spinner"></div>
-      </div>
+  const initialLoading = document.getElementById('initial-loading');
+  const joiningState = document.getElementById('joining-state');
+  const browserJoinLink = document.getElementById('browser-join-link') as HTMLAnchorElement;
 
-      <div id="troubleshoot" class="opacity-0 transition-opacity flex flex-col items-center">
-        <a href="${webUrl}" target="_blank" class="secondary-link">
-          App unsupported? Try Browser
-        </a>
-      </div>
-
-      <a href="https://jailbreakchangelogs.xyz/" target="_blank" class="footer-brand">
-        <span>Powered by Jailbreak Changelogs</span>
-      </a>
-    </div>
-  `;
+  if (initialLoading) initialLoading.classList.add('hidden');
+  if (joiningState) joiningState.classList.remove('hidden');
+  if (browserJoinLink) browserJoinLink.href = webUrl;
 
   // Attempt the auto-launch immediately
   window.location.href = directUrl;
@@ -65,24 +51,13 @@ function handleServerJoin(jobId: string, statusElement: HTMLElement) {
  * Shows the error page when no job ID is provided
  */
 function showErrorPage() {
-  document.body.classList.add('error-page');
-  const container = document.querySelector('.container');
+  const initialLoading = document.getElementById('initial-loading');
+  const errorState = document.getElementById('error-state');
 
-  if (container) {
-    container.innerHTML = `
-      <div class="mb-8">
-        <div class="error-code">404</div>
-        <h1 class="error-title">Connection Error</h1>
-        <p class="error-message">
-          Unable to connect to the server. The jobid parameter is missing from the URL.
-        </p>
-      </div>
-      <div class="error-actions">
-        <button onclick="window.close()" class="primary-button">Close Tab</button>
-        <button onclick="window.history.back()" class="secondary-button">Go Back</button>
-      </div>
-    `;
-  }
+  if (initialLoading) initialLoading.classList.add('hidden');
+  if (errorState) errorState.classList.remove('hidden');
+  
+  document.body.classList.add('error-page');
 }
 
 // Initialize when DOM is ready

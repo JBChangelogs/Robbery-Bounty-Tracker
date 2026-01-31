@@ -1,0 +1,40 @@
+---
+import Logo from "./Logo.astro";
+
+// Joining state component
+---
+
+<div id="joining-state" class="hidden">
+  <div class="flex flex-col items-center">
+    <Logo />
+    <h1 class="text-xl">Joining Jailbreak</h1>
+    <p>Launching the game instance...</p>
+
+    <div class="spinner-container">
+      <div class="spinner"></div>
+    </div>
+
+    <div
+      id="troubleshoot"
+      class="opacity-0 transition-opacity flex flex-col items-center"
+    >
+      <a
+        id="browser-join-link"
+        href="#"
+        target="_blank"
+        class="secondary-link"
+        data-umami-event="browser-join-click"
+      >
+        App unsupported? Try Browser
+      </a>
+    </div>
+
+    <a
+      href="https://jailbreakchangelogs.xyz/"
+      target="_blank"
+      class="footer-brand"
+    >
+      <span>Powered by Jailbreak Changelogs</span>
+    </a>
+  </div>
+</div>

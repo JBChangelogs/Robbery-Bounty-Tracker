@@ -196,3 +196,25 @@ p {
 .opacity-0 { opacity: 0; pointer-events: none; }
 .opacity-100 { opacity: 1; pointer-events: auto; }
 .transition-opacity { transition: opacity 0.5s ease-in-out; }
+.hidden { display: none !important; }
+
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+.footer-brand {
+    width: 100%;
+}
+
+.error-image {
+  width: 100%;
+  height: auto;
+  max-width: 280px;
+  filter: drop-shadow(0 0 20px rgba(102, 112, 133, 0.2));
+}
+
+.text-secondary { color: var(--color-secondary-text); }
+.text-sm { font-size: 0.875rem; }
+.font-bold { font-weight: 700; }
+.tracking-wider { letter-spacing: 0.05em; }
+.uppercase { text-transform: uppercase; }
