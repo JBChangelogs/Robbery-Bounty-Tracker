@@ -66,7 +66,6 @@ function handleServerJoin(jobId: string, statusElement: HTMLElement) {
  */
 function showErrorPage() {
   document.body.classList.add('error-page');
-  document.body.style.setProperty('background-image', 'url(https://assets.jailbreakchangelogs.xyz/assets/backgrounds/png/background16.png)', 'important');
   const container = document.querySelector('.container');
 
   if (container) {
