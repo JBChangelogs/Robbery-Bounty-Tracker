@@ -5,7 +5,7 @@
     "": {
       "name": "astro-rewrite",
       "dependencies": {
-        "astro": "^5.16.12",
+        "astro": "^5.17.1",
       },
     },
   },
