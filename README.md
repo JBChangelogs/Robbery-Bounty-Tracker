@@ -11,9 +11,15 @@
 > [!NOTE]
 > This is a fan-made project operated by Jailbreak Changelogs LLC and is not affiliated with or endorsed by Badimo - the development team behind Roblox Jailbreak.
 
-# Jailbreak Changelogs Server Joiner
+# Jailbreak Changelogs Tracker Notice
 
-Web app for joining specific Roblox Jailbreak servers via deep links.
+This repository now serves a deprecation notice page.
+
+Server launching and direct Roblox deep-link joining have moved to the main website:
+- https://jailbreakchangelogs.xyz/robberies
+- https://jailbreakchangelogs.xyz/bounties
+
+Users should refresh those pages to receive the latest join button updates.
 
 ## Tech Stack
 
@@ -27,14 +33,11 @@ Web app for joining specific Roblox Jailbreak servers via deep links.
 /
 ├── src/
 │   ├── components/          # Reusable UI components
-│   │   ├── Logo.astro      # Logo with fallback
-│   │   └── LoadingState.astro  # Loading UI
+│   │   └── Logo.astro      # Logo with fallback
 │   ├── layouts/            # Page layouts
 │   │   └── BaseLayout.astro    # Base HTML structure
 │   ├── pages/              # Routes
-│   │   └── index.astro     # Main page
-│   ├── scripts/            # Client-side logic
-│   │   └── server-joiner.ts    # Server joining logic
+│   │   └── index.astro     # Deprecation/migration page
 │   └── styles/             # Global styles
 │       └── global.css      # All CSS styling
 ├── public/                 # Static assets
@@ -54,23 +57,14 @@ Open `http://localhost:4321`
 
 ## Usage
 
-```
-/?jobid=YOUR_JOB_ID
-```
+Visit the deployed page to view the migration/deprecation notice and the links to the main website trackers.
 
-Example: `/?jobid=23fb286f-7b40-438a-ba1c-85dd1b632649`
+## Behavior
 
-## Configuration
-
-**Background images** - Random 1-30 from `src/pages/index.astro`:
-```typescript
-const randomBg = Math.floor(Math.random() * 30) + 1;
-```
-
-**Place ID** - Change in `src/scripts/server-joiner.ts`:
-```typescript
-const PLACE_ID = '606849621'; // Roblox Jailbreak Place ID
-```
+- The site shows a deprecation notice and links users to:
+  - `https://jailbreakchangelogs.xyz/robberies`
+  - `https://jailbreakchangelogs.xyz/bounties`
+- URLs with query parameters are redirected to `/` so old deep-link URLs cannot be used here.
 
 ## Build
 
@@ -82,4 +76,4 @@ Output in `dist/` - deploy to Cloudflare Pages, Vercel, Netlify, etc.
 
 ## Credits
 
-Server joining functionality based on work by [linsonder6](https://github.com/linsonder6/)
+Main tracking and join experience now lives on the main Jailbreak Changelogs website.

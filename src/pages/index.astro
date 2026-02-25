@@ -1,20 +1,84 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Logo from "../components/Logo.astro";
-import LoadingState from "../components/LoadingState.astro";
-import JoiningState from "../components/JoiningState.astro";
-import ErrorState from "../components/ErrorState.astro";
 ---
 
 <BaseLayout>
   <div class="container">
-    <div id="initial-loading">
+    <div class="flex flex-col items-center">
       <Logo />
-      <LoadingState />
-    </div>
-    <JoiningState />
-    <ErrorState />
-  </div>
+      <span class="text-secondary text-sm font-bold tracking-wider uppercase mb-4"
+        >This page moved</span
+      >
+      <h1>Join servers on the main Jailbreak Changelogs website.</h1>
+      <p class="mb-6">
+        Use one of these pages.
+      </p>
 
-  <script src="../scripts/server-joiner.ts"></script>
+      <a
+        href="https://jailbreakchangelogs.xyz/robberies"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="primary-button w-full"
+      >
+        Open Robbery Tracking
+      </a>
+
+      <a
+        href="https://jailbreakchangelogs.xyz/bounties"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="primary-button w-full"
+      >
+        Open Bounty Tracking
+      </a>
+
+      <p class="refresh-note">
+        Refresh those pages if your join buttons still use old behavior.
+      </p>
+
+      <a
+        href="https://jailbreakchangelogs.xyz/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-brand"
+      >
+        <span>Powered by Jailbreak Changelogs</span>
+      </a>
+    </div>
+  </div>
 </BaseLayout>
+
+<script>
+  if (window.location.search) {
+    window.location.replace(`${window.location.origin}/`);
+  }
+</script>
+
+<style>
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  .font-bold {
+    font-weight: 700;
+  }
+  .tracking-wider {
+    letter-spacing: 0.05em;
+  }
+  .uppercase {
+    text-transform: uppercase;
+  }
+  .text-secondary {
+    color: var(--color-secondary-text);
+  }
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  .mb-6 {
+    margin-bottom: 1.5rem;
+  }
+  .refresh-note {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+  }
+</style>
